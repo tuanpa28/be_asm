@@ -6,6 +6,8 @@ import connectDB from "./src/config/database.js";
 import productRouter from "./src/routers/product.js";
 import cateRouter from "./src/routers/category.js";
 import authRouter from "./src/routers/auth.js";
+import userRouter from "./src/routers/user.js";
+
 const app = express();
 const port = process.env.PORT || 8080;
 dotenv.config();
@@ -22,6 +24,7 @@ app.use(cors());
 app.use("/api", authRouter);
 app.use("/api", productRouter);
 app.use("/api", cateRouter);
+app.use("/api", userRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
