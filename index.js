@@ -4,6 +4,7 @@ import * as dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./src/config/database.js";
 import productRouter from "./src/routers/product.js";
+import cateRouter from "./src/routers/category.js";
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -19,6 +20,7 @@ app.use(cors());
 
 // routes
 app.use("/api", productRouter);
+app.use("/api", cateRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
