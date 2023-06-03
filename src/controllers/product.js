@@ -1,5 +1,5 @@
 import Product from "../models/product.js";
-// import Category from "../models/category.js";
+import Category from "../models/category.js";
 import { proSchema } from "../schemas/product.js";
 
 // Lấy tất cả sản phẩm
