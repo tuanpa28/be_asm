@@ -5,7 +5,7 @@ import cors from "cors";
 import connectDB from "./src/config/database.js";
 import productRouter from "./src/routers/product.js";
 import cateRouter from "./src/routers/category.js";
-
+import authRouter from "./src/routers/auth.js";
 const app = express();
 const port = process.env.PORT || 8080;
 dotenv.config();
@@ -19,6 +19,7 @@ app.use(morgan("tiny"));
 app.use(cors());
 
 // routes
+app.use("/api", authRouter);
 app.use("/api", productRouter);
 app.use("/api", cateRouter);
 
