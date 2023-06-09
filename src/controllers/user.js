@@ -2,16 +2,12 @@ import User from "../models/user.js";
 
 export const getUserProfile = async (req, res) => {
   try {
-    const { _expand } = req.query;
-
-    const populateOptions = _expand
-      ? [
-          {
-            path: "cart.productId",
-            select: "name price",
-          },
-        ]
-      : [];
+    const populateOptions = [
+      {
+        path: "cart.productId",
+        select: "name price",
+      },
+    ];
 
     const user = await User.findById(req.user._id).populate(populateOptions);
 
