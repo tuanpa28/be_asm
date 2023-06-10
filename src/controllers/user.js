@@ -5,7 +5,7 @@ export const getUserProfile = async (req, res) => {
     const populateOptions = [
       {
         path: "cart.productId",
-        select: "name price",
+        select: "name price image",
       },
     ];
 
