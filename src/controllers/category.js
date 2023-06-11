@@ -37,7 +37,7 @@ export const getCategories = async (req, res) => {
     };
 
     const populateOptions = _embed
-      ? [{ path: "productId", select: "name" }]
+      ? [{ path: "productId", select: "name price image description" }]
       : [];
 
     const categories = await Category.paginate(query, {

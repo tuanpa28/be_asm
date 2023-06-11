@@ -22,7 +22,7 @@ Category.pre("findOneAndDelete", async function (next) {
     const filter = this.getFilter(); // Lấy điều kiện tìm kiếm hiện tại của truy vấn
     const categoryId = this.getQuery().$set?.categoryId; // Lấy giá trị mới của trường categoryId nếu có
     const update = {
-      categoryId: categoryId ?? "uncategorized", // Cập nhật categoryId mới hoặc "uncategorized" nếu không có giá trị mới
+      categoryId: categoryId ?? null, // Cập nhật categoryId mới hoặc "uncategorized" nếu không có giá trị mới
     };
 
     await Product.updateMany(
