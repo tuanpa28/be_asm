@@ -57,31 +57,23 @@ export const updateCart = async (req, res) => {
 
     const user = await User.findById(userId).select("cart");
 
-    const alreadyProduct = user.cart.find(
+    const alreadyProductIndex = user.cart.findIndex(
       (item) => item.productId.toString() === productId
     );
 
-    if (alreadyProduct) {
-      const response = await User.updateOne(
-        { cart: { $elemMatch: alreadyProduct } },
-        { $set: { "cart.$.quantity": quantity } },
-        { new: true }
-      );
-      return res
-        .status(200)
-        .json({ message: "Add to cart success!", updateUser: response });
+    if (alreadyProductIndex !== -1) {
+      // Nếu sản phẩm đã tồn tại trong giỏ hàng, cộng dồn số lượng
+      user.cart[alreadyProductIndex].quantity += quantity;
     } else {
-      const response = await User.findByIdAndUpdate(
-        userId,
-        {
-          $push: { cart: { productId, quantity } },
-        },
-        { new: true }
-      );
-      return res
-        .status(200)
-        .json({ message: "Add to cart success!", updateUser: response });
+      // Nếu sản phẩm chưa tồn tại trong giỏ hàng, thêm mới
+      user.cart.push({ productId, quantity });
     }
+
+    const response = await user.save();
+
+    return res
+      .status(200)
+      .json({ message: "Add to cart success!", updateUser: response });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
