@@ -1,5 +1,5 @@
 import User from "../models/user.js";
-
+import Product from "../models/product.js";
 export const getUserProfile = async (req, res) => {
   try {
     const populateOptions = [
@@ -99,6 +99,26 @@ export const deleteCart = async (req, res) => {
       message: "Remove product in cart success!",
       updateUser: response,
     });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+export const comment = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const { productId, description } = req.body;
+
+    const product = await Product.findById(productId);
+    console.log(product)
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    product.comments.push({ userId, description });
+
+    await product.save();
+
+    return res.status(200).json({ message: 'Comment added successfully' });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

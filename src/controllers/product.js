@@ -72,20 +72,20 @@ export const getProduct = async (req, res) => {
 
     const populateOptions = _expand
       ? [
-          {
-            path: "categoryId",
-            select: "name",
-            populate: {
-              path: "productId",
-              select: "name price image description",
-            },
+        {
+          path: "categoryId",
+          select: "name",
+          populate: {
+            path: "productId",
+            select: "name price image description",
           },
-        ]
+        },
+      ]
       : [];
-
     const product = await Product.findById(req.params.id).populate(
-      populateOptions
+      "comments.userId"
     );
+
 
     if (!product) return res.json({ message: "Không tìm thấy sản phẩm!" });
 

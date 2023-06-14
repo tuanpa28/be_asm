@@ -8,6 +8,12 @@ const Product = new Schema(
     image: { type: Object, required: true },
     description: { type: String, required: true },
     categoryId: { type: Types.ObjectId, ref: "Category", required: true },
+    comments: [
+      {
+        userId: { type: Types.ObjectId, ref: "User" },
+        description: String,
+      },
+    ],
     createdAt: { type: Date },
     updatedAt: { type: Date },
   },
